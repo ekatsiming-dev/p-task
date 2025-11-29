@@ -6,6 +6,10 @@
     <title>皮克敏 活動助手 - Event Planner</title>
     <meta name="description" content="Pikmin Bloom Event Planner">
     
+    <!-- Favicon & Touch Icon -->
+    <link rel="icon" type="image/png" href="flower.png">
+    <link rel="apple-touch-icon" href="flower.png">
+
     <!-- React & Tailwind -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -185,8 +189,8 @@
                 tag: '2025/11 Event',
                 heroImage: 'https://lh3.googleusercontent.com/RWn7F4xsRiOAKoCjgOSmXpoQ8w4aFIpHNKV4q78kkQyYzOO3rx03EudVIftEJXQFffkeq52nRYnexklX9SLJQ26-cP2VFTnop5_zdn8=s000',
                 title: <>歡慶。<br/><span className="bg-clip-text text-transparent bg-party-gradient">繽紛</span>你的旅程</>,
-                endDate: new Date(2025, 11, 30, 23, 59, 59), // Nov 30 (Month is 0-indexed in JS Date, so 11 is Dec? No. new Date(2025, 10, 30) is Nov. Wait. Let's stick to standard JS Date: Month is 0-11. So 11 is Dec? No. 10 is Nov. Let's check user provided code. User provided `new Date(2025, 11, 0...)` which means last day of Nov (Month 11 is Dec, day 0 is last day of Prev month). Correct.)
-                // Actually user code had: new Date(2025, 11, 0, ...) -> Nov 30. Correct.
+                // 11月30日結束 (Month 10 is Nov)
+                endDate: new Date(2025, 10, 30, 23, 59, 59), 
                 tasks: [
                     {
                         id: 1, title: "Stage 1：暖身起步",
@@ -206,7 +210,7 @@
                             { id: "2-2b", type: "mushroom", text: "摧毀 2 棵蘑菇" },
                             { id: "2-3a", type: "grow", text: "培育 3 隻皮克敏" },
                             { id: "2-3b", type: "mushroom", text: "摧毀 3 棵蘑菇" },
-                            { id: "2-4a", type: "plant", flowerType: "主花", amount: 500, text: "種 500 朵主花" },
+                            { id: "2-4a", type: "plant", flowerType: "鼠尾草", amount: 500, text: "種 500 朵鼠尾草" },
                             { id: "2-4b", type: "mushroom", text: "摧毀 4 棵蘑菇" },
                         ]
                     },
@@ -215,12 +219,12 @@
                         tasks: [
                             { id: "3-1a", type: "step", text: "走 2000 步" },
                             { id: "3-1b", type: "expedition", text: "完成 2 個探險" },
-                            { id: "3-2a", type: "plant", flowerType: "白色副花", amount: 1500, text: "種 1500 朵白色副花" },
+                            { id: "3-2a", type: "plant", flowerType: "白色鐵線蓮", amount: 1500, text: "種 1500 朵白色鐵線蓮" },
                             { id: "3-2b", type: "mushroom", text: "摧毀 3 棵蘑菇" },
-                            { id: "3-3a", type: "plant", flowerType: "紅色副花", amount: 1500, text: "種 1500 朵紅色副花" },
+                            { id: "3-3a", type: "plant", flowerType: "紅色鐵線蓮", amount: 1500, text: "種 1500 朵紅色鐵線蓮" },
                             { id: "3-3b", type: "mushroom", text: "摧毀 4 棵蘑菇" },
-                            { id: "3-4a", type: "plant", flowerType: "黃色副花", amount: 1500, text: "種 1500 朵黃色副花" },
-                            { id: "3-4b", type: "plant", flowerType: "紅色主花", amount: 2000, text: "種 2000 朵紅色主花" },
+                            { id: "3-4a", type: "plant", flowerType: "黃色鐵線蓮", amount: 1500, text: "種 1500 朵黃色鐵線蓮" },
+                            { id: "3-4b", type: "plant", flowerType: "紅色鼠尾草", amount: 2000, text: "種 2000 朵紅色鼠尾草" },
                             { id: "3-4c", type: "mushroom", text: "摧毀 5 棵蘑菇" },
                         ]
                     },
@@ -229,13 +233,13 @@
                         tasks: [
                             { id: "4-1a", type: "expedition", text: "完成 3 個探險" },
                             { id: "4-1b", type: "mushroom", text: "摧毀 3 棵蘑菇" },
-                            { id: "4-2a", type: "plant", flowerType: "白色主花", amount: 2000, text: "種 2000 朵白色主花" },
+                            { id: "4-2a", type: "plant", flowerType: "白色鼠尾草", amount: 2000, text: "種 2000 朵白色鼠尾草" },
                             { id: "4-2b", type: "mushroom", text: "摧毀 4 棵蘑菇" },
-                            { id: "4-3a", type: "plant", flowerType: "黃色主花", amount: 2000, text: "種 2000 朵黃色主花" },
-                            { id: "4-3b", type: "plant", flowerType: "藍色副花", amount: 1000, text: "種 1000 朵藍色副花" },
+                            { id: "4-3a", type: "plant", flowerType: "黃色鼠尾草", amount: 2000, text: "種 2000 朵黃色鼠尾草" },
+                            { id: "4-3b", type: "plant", flowerType: "藍色鐵線蓮", amount: 1000, text: "種 1000 朵藍色鐵線蓮" },
                             { id: "4-3c", type: "mushroom", text: "摧毀 4 棵蘑菇" },
-                            { id: "4-4a", type: "plant", flowerType: "藍色主花", amount: 2000, text: "種 2000 朵藍色主花" },
-                            { id: "4-4b", type: "plant", flowerType: "副花", amount: 2500, text: "種 2500 朵副花 (任意)" },
+                            { id: "4-4a", type: "plant", flowerType: "藍色鼠尾草", amount: 2000, text: "種 2000 朵藍色鼠尾草" },
+                            { id: "4-4b", type: "plant", flowerType: "鐵線蓮", amount: 2500, text: "種 2500 朵鐵線蓮 (任意)" },
                             { id: "4-4c", type: "mushroom", text: "摧毀 5 棵蘑菇" },
                         ]
                     }
@@ -248,7 +252,8 @@
                 tag: 'Dec Event',
                 heroImage: 'https://lh3.googleusercontent.com/d1i3RJNuwi0YFvsvIYaOM5FSa1ui8-cYNIIop1gJOwZn__s3_qYcysCwXxDUAnBJl5TLLUuhlvgESVN97VK9Lu4EmzQzSJxvDPcMxQ=rw-e365-w2880',
                 title: <>暖心。<br/><span className="bg-clip-text text-transparent bg-party-gradient">佳節</span>相聚時刻</>,
-                endDate: new Date(2025, 11, 31, 23, 59, 59), // Dec 31
+                // 12月31日結束 (Month 11 is Dec)
+                endDate: new Date(2025, 11, 31, 23, 59, 59),
                 tasks: [
                     {
                         id: 1, title: "Stage 1：暖身起步",
