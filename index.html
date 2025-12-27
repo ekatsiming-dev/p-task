@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>皮克敏 活動助手 - 2026 賀歲新篇</title>
-    <meta name="description" content="Pikmin Bloom Event Planner 2026">
+    <title>皮克敏助手 | 全中文活潑明亮版</title>
     
     <!-- React & Tailwind -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
@@ -24,31 +23,10 @@
                         display: ['"Outfit"', '"Noto Sans TC"', 'sans-serif'],
                     },
                     colors: {
-                        // 2026 賀歲主題：初晴藍與金黃
-                        primary: 'var(--color-primary)', 
-                        'primary-dark': 'var(--color-primary-dark)',
-                        secondary: 'var(--color-secondary)',
-                        highlight: 'var(--color-highlight)',
+                        primary: 'var(--color-primary)',
+                        'primary-light': 'var(--color-primary-light)',
                         base: 'var(--color-base)',
-                        text: 'var(--color-text)',
-                        success: 'var(--color-success)',
-                    },
-                    backgroundImage: {
-                        'cinematic-mask': 'var(--bg-cinematic-mask)',
-                        'party-gradient': 'var(--bg-party-gradient)',
-                    },
-                    animation: {
-                        'fade-in': 'fadeIn 0.6s ease-out',
-                        'slide-up': 'slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'bloom': 'bloom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                        'float': 'float 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-                        slideUp: { '0%': { transform: 'translateY(30px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
-                        bloom: { '0%': { transform: 'scale(0.8)', opacity: '0.5' }, '50%': { transform: 'scale(1.1)' }, '100%': { transform: 'scale(1)', opacity: '1' } },
-                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } }
+                        surface: '#ffffff',
                     }
                 }
             }
@@ -56,54 +34,43 @@
     </script>
 
     <style>
-        :root {
-            /* Default: Jan 2026 Blue Theme */
-            --color-primary: #0ea5e9; 
-            --color-primary-dark: #0369a1;
-            --color-secondary: #075985;
-            --color-highlight: #fef3c7;
-            --color-base: #f0f9ff;
-            --color-text: #0c4a6e;
-            --color-success: #10b981;
-            
-            --bg-cinematic-mask: linear-gradient(to top, rgba(7, 89, 133, 0.95) 0%, rgba(14, 165, 233, 0.2) 60%, rgba(255,255,255,0) 100%);
-            --bg-party-gradient: linear-gradient(135deg, #0ea5e9 0%, #f59e0b 100%);
-        }
-
-        /* Override for Dec Red Theme */
-        [data-theme='dec'] {
+        /* 月份色彩定義 */
+        [data-month='dec2025'] {
             --color-primary: #e11d48;
-            --color-primary-dark: #be123c;
-            --color-secondary: #064e3b;
-            --color-highlight: #fef9c3;
-            --color-base: #fff1f2;
-            --color-text: #1c1917;
-            --color-success: #15803d;
-            --bg-cinematic-mask: linear-gradient(to top, rgba(6, 78, 59, 0.95) 0%, rgba(225, 29, 72, 0.2) 60%, rgba(255,255,255,0) 100%);
-            --bg-party-gradient: linear-gradient(135deg, #15803d 0%, #f59e0b 50%, #e11d48 100%);
+            --color-primary-light: #fff1f2;
+            --color-base: #fff5f6;
+            --mask-gradient: linear-gradient(to top, #fff5f6 0%, rgba(255,245,246,0.2) 50%, rgba(255,245,246,0) 100%);
+        }
+        [data-month='jan2026'] {
+            --color-primary: #0ea5e9;
+            --color-primary-light: #f0f9ff;
+            --color-base: #f8fafc;
+            --mask-gradient: linear-gradient(to top, #f8fafc 0%, rgba(248,250,252,0.2) 50%, rgba(248,250,252,0) 100%);
         }
 
         body {
             background-color: var(--color-base);
-            color: var(--color-text);
-            -webkit-tap-highlight-color: transparent;
-            transition: all 0.5s ease;
+            color: #1e293b;
+            font-family: 'Noto Sans TC', sans-serif;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden;
         }
+
+        .hero-mask { background: var(--mask-gradient); }
+        .card-shadow { box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 8px 12px -6px rgba(0, 0, 0, 0.02); }
+        .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.5); }
         
         .accordion-content {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: 0; opacity: 0; overflow: hidden; transform: translateY(-10px);
+            max-height: 0; opacity: 0; overflow: hidden;
         }
-        .accordion-content.open { max-height: 2000px; opacity: 1; transform: translateY(0); }
-
-        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.8); }
-        .glass-panel-dark { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15); }
+        .accordion-content.open { max-height: 2500px; opacity: 1; }
         
-        .link-chain {
-            position: absolute; left: 24px; top: 40px; bottom: 40px; width: 2px;
-            background: linear-gradient(to bottom, transparent 0%, var(--color-primary) 50%, transparent 100%);
-            z-index: 0; opacity: 0.5;
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
+        .animate-bounce-slow { animation: bounce-slow 4s infinite ease-in-out; }
     </style>
 </head>
 <body>
@@ -112,338 +79,307 @@
     <script type="text/babel">
         const { useState, useEffect, useMemo } = React;
 
-        // --- Data Definitions ---
+        const TRANSPORT_CONFIG = {
+            walk: { id: 'walk', label: '步行', icon: '🚶', multiplier: 0.3, speedFactor: 1 },
+            bike: { id: 'bike', label: '單車', icon: '🚲', multiplier: 0.5, speedFactor: 1.5 },
+            bus: { id: 'bus', label: '公車', icon: '🚌', multiplier: 0.7, speedFactor: 2 }
+        };
+
         const EVENTS = {
             dec2025: {
                 id: 'dec2025',
-                name: '12月：暖心佳節',
-                theme: 'dec',
+                name: '12月 暖心佳節',
                 heroImage: 'https://lh3.googleusercontent.com/d1i3RJNuwi0YFvsvIYaOM5FSa1ui8-cYNIIop1gJOwZn__s3_qYcysCwXxDUAnBJl5TLLUuhlvgESVN97VK9Lu4EmzQzSJxvDPcMxQ=rw-e365-w2880',
-                title: <>暖心。<br/><span className="bg-clip-text text-transparent bg-party-gradient">佳節</span>相聚時刻</>,
-                endDate: new Date(2025, 11, 31, 23, 59, 59),
-                tasks: [
-                    {
-                        id: 1, title: "Stage 1：暖身起步",
-                        tasks: [
-                            { id: "d1-1", type: "step", text: "走 1000 步" },
-                            { id: "d1-2", type: "grow", text: "培育 2 隻皮克敏" },
-                            { id: "d1-3", type: "expedition", text: "完成 2 個探險" },
-                            { id: "d1-4a", type: "plant", flowerType: "一般花朵", amount: 1000, text: "種 1000 朵花" },
-                            { id: "d1-4b", type: "mushroom", text: "摧毀 2 棵蘑菇" },
-                        ]
-                    },
-                    {
-                        id: 2, title: "Stage 2：探索升溫",
-                        tasks: [
-                            { id: "d2-1", type: "step", text: "走 2000 步" },
-                            { id: "d2-2a", type: "plant", flowerType: "一般花朵", amount: 1000, text: "種 1000 朵花" },
-                            { id: "d2-2b", type: "mushroom", text: "摧毀 2 棵蘑菇" },
-                            { id: "d2-3a", type: "grow", text: "培育 3 隻皮克敏" },
-                            { id: "d2-3b", type: "mushroom", text: "摧毀 3 棵蘑菇" },
-                            { id: "d2-4a", type: "plant", flowerType: "櫻草花", amount: 500, text: "種 500 朵櫻草花" },
-                            { id: "d2-4b", type: "mushroom", text: "摧毀 4 棵蘑菇" },
-                        ]
-                    },
-                    {
-                        id: 3, title: "Stage 3：色彩綻放",
-                        tasks: [
-                            { id: "d3-1a", type: "step", text: "走 2000 步" },
-                            { id: "d3-1b", type: "expedition", text: "完成 2 個探險" },
-                            { id: "d3-2a", type: "plant", flowerType: "白色聖誕紅", amount: 1500, text: "種 1500 朵白色聖誕紅" },
-                            { id: "d3-2b", type: "mushroom", text: "摧毀 3 棵蘑菇" },
-                            { id: "d3-3a", type: "plant", flowerType: "紅色聖誕紅", amount: 1500, text: "種 1500 朵紅色聖誕紅" },
-                            { id: "d3-3b", type: "mushroom", text: "摧毀 4 棵蘑菇" },
-                            { id: "d3-4a", type: "plant", flowerType: "黃色聖誕紅", amount: 1500, text: "種 1500 朵黃色聖誕紅" },
-                            { id: "d3-4b", type: "plant", flowerType: "紅色櫻草花", amount: 2000, text: "種 2000 朵紅色櫻草花" },
-                            { id: "d3-4c", type: "mushroom", text: "摧毀 5 棵蘑菇" },
-                        ]
-                    },
-                    {
-                        id: 4, title: "Stage 4：終極挑戰",
-                        tasks: [
-                            { id: "d4-1a", type: "expedition", text: "完成 3 個探險" },
-                            { id: "d4-1b", type: "mushroom", text: "摧毀 3 棵蘑菇" },
-                            { id: "d4-2a", type: "plant", flowerType: "白色櫻草花", amount: 2000, text: "種 2000 朵白色櫻草花" },
-                            { id: "d4-2b", type: "mushroom", text: "摧毀 4 棵蘑菇" },
-                            { id: "d4-3a", type: "plant", flowerType: "黃色櫻草花", amount: 2000, text: "種 2000 朵黃色櫻草花" },
-                            { id: "d4-3b", type: "plant", flowerType: "藍色聖誕紅", amount: 1000, text: "種 1000 朵藍色聖誕紅" },
-                            { id: "d4-3c", type: "mushroom", text: "摧毀 4 棵蘑菇" },
-                            { id: "d4-4a", type: "plant", flowerType: "藍色櫻草花", amount: 2000, text: "種 2000 朵藍色櫻草花" },
-                            { id: "d4-4b", type: "plant", flowerType: "聖誕紅", amount: 2500, text: "種 2500 朵聖誕紅 (任意)" },
-                            { id: "d4-4c", type: "mushroom", text: "摧毀 5 棵蘑菇" },
-                        ]
-                    }
+                title: "佳節相聚",
+                stages: [
+                    { id: 1, title: "第一階段: 起步", tasks: [
+                        { id: "d1-1", text: "走 1000 步" },
+                        { id: "d1-2", text: "培育 2 隻皮克敏" },
+                        { id: "d1-3", text: "完成 2 個探險" },
+                        { id: "d1-4", text: "種 1000 朵花", amount: 1000 },
+                        { id: "d1-5", text: "摧毀 2 棵蘑菇" },
+                    ]},
+                    { id: 2, title: "第二階段: 探索", tasks: [
+                        { id: "d2-1", text: "走 2000 步" },
+                        { id: "d2-2", text: "種 1000 朵一般花", amount: 1000 },
+                        { id: "d2-3", text: "培育 3 隻皮克敏" },
+                        { id: "d2-4", text: "種 500 朵櫻草花", amount: 500 },
+                        { id: "d2-5", text: "摧毀 4 棵蘑菇" },
+                    ]},
+                    { id: 3, title: "第三階段: 綻放", tasks: [
+                        { id: "d3-1", text: "完成 2 個探險" },
+                        { id: "d3-2", text: "種 1500 朵白色聖誕紅", amount: 1500 },
+                        { id: "d3-3", text: "種 1500 朵紅色聖誕紅", amount: 1500 },
+                        { id: "d3-4", text: "種 1500 朵黃色聖誕紅", amount: 1500 },
+                        { id: "d3-5", text: "種 2000 朵紅色櫻草花", amount: 2000 },
+                        { id: "d3-6", text: "摧毀 5 棵蘑菇" },
+                    ]},
+                    { id: 4, title: "第四階段: 挑戰", tasks: [
+                        { id: "d4-1", text: "種 2000 朵白色櫻草花", amount: 2000 },
+                        { id: "d4-2", text: "摧毀 3 棵蘑菇" },
+                        { id: "d4-3", text: "種 2000 朵黃色櫻草花", amount: 2000 },
+                        { id: "d4-4", text: "種 1000 朵藍色聖誕紅", amount: 1000 },
+                        { id: "d4-5", text: "種 2000 朵藍色櫻草花", amount: 2000 },
+                        { id: "d4-6", text: "種 2500 朵聖誕紅", amount: 2500 },
+                        { id: "d4-7", text: "摧毀 5 棵蘑菇" },
+                    ]}
                 ]
             },
             jan2026: {
                 id: 'jan2026',
-                name: '1月：賀歲新篇',
-                theme: 'jan',
+                name: '1月 賀歲新篇',
                 heroImage: 'https://lh3.googleusercontent.com/nBKEDxRMfpBkfY9V87EJI-aWnW1S12VSVMIQDY9XjEcA6YAyJIU48BB2-AnmoMocqLcO4ZXYttZ5tiagYjmA5Nc-6dMcqS64F8M3qws=rw-e365-w2880',
-                title: <>賀歲。<br/><span className="bg-clip-text text-transparent bg-party-gradient">2026</span> 繁花盛開</>,
-                endDate: new Date(2026, 0, 31, 23, 59, 59),
-                tasks: [
-                    {
-                        id: 1, title: "Stage 1：新年起步",
-                        tasks: [
-                            { id: "j1-1", type: "step", text: "走 1000 步" },
-                            { id: "j1-2", type: "grow", text: "培育 2 隻皮克敏" },
-                            { id: "j1-3", type: "expedition", text: "完成 2 個探險" },
-                            { id: "j1-4a", type: "plant", flowerType: "一般花朵", amount: 1000, text: "種 1000 朵花" },
-                            { id: "j1-4b", type: "mushroom", text: "摧毀 2 棵蘑菇" },
-                        ]
-                    },
-                    {
-                        id: 2, title: "Stage 2：蝴蝶探春",
-                        tasks: [
-                            { id: "j2-1", type: "step", text: "走 2000 步" },
-                            { id: "j2-2a", type: "plant", flowerType: "一般花朵", amount: 1000, text: "種 1000 朵花" },
-                            { id: "j2-2b", type: "mushroom", text: "摧毀 2 棵蘑菇" },
-                            { id: "j2-3a", type: "grow", text: "培育 3 隻皮克敏" },
-                            { id: "j2-3b", type: "mushroom", text: "摧毀 3 棵蘑菇" },
-                            { id: "j2-4a", type: "plant", flowerType: "蝴蝶蘭", amount: 500, text: "種 500 朵蝴蝶蘭" },
-                            { id: "j2-4b", type: "mushroom", text: "摧毀 4 棵蘑菇" },
-                        ]
-                    },
-                    {
-                        id: 3, title: "Stage 3：山茶爭豔",
-                        tasks: [
-                            { id: "j3-1a", type: "step", text: "走 2000 步" },
-                            { id: "j3-1b", type: "expedition", text: "完成 2 個探險" },
-                            { id: "j3-2a", type: "plant", flowerType: "白色山茶花", amount: 1500, text: "種 1500 朵白色山茶花" },
-                            { id: "j3-2b", type: "mushroom", text: "摧毀 3 棵蘑菇" },
-                            { id: "j3-3a", type: "plant", flowerType: "紅色山茶花", amount: 1500, text: "種 1500 朵紅色山茶花" },
-                            { id: "j3-3b", type: "mushroom", text: "摧毀 4 棵蘑菇" },
-                            { id: "j3-4a", type: "plant", flowerType: "黃色山茶花", amount: 1500, text: "種 1500 朵黃色山茶花" },
-                            { id: "j3-4b", type: "plant", flowerType: "紅色蝴蝶蘭", amount: 2000, text: "種 2000 朵紅色蝴蝶蘭" },
-                            { id: "j3-4c", type: "mushroom", text: "摧毀 5 棵蘑菇" },
-                        ]
-                    },
-                    {
-                        id: 4, title: "Stage 4：繽紛新歲",
-                        tasks: [
-                            { id: "j4-1a", type: "expedition", text: "完成 3 個探險" },
-                            { id: "j4-1b", type: "mushroom", text: "摧毀 3 棵蘑菇" },
-                            { id: "j4-2a", type: "plant", flowerType: "白色蝴蝶蘭", amount: 2000, text: "種 2000 朵白色蝴蝶蘭" },
-                            { id: "j4-2b", type: "mushroom", text: "摧毀 4 棵蘑菇" },
-                            { id: "j4-3a", type: "plant", flowerType: "黃色蝴蝶蘭", amount: 2000, text: "種 2000 朵黃色蝴蝶蘭" },
-                            { id: "j4-3b", type: "plant", flowerType: "藍色山茶花", amount: 1000, text: "種 1000 朵藍色山茶花" },
-                            { id: "j4-3c", type: "mushroom", text: "摧毀 4 棵蘑菇" },
-                            { id: "j4-4a", type: "plant", flowerType: "藍色蝴蝶蘭", amount: 2000, text: "種 2000 朵藍色蝴蝶蘭" },
-                            { id: "j4-4b", type: "plant", flowerType: "山茶花", amount: 2500, text: "種 2500 朵山茶花 (任意)" },
-                            { id: "j4-4c", type: "mushroom", text: "摧毀 5 棵蘑菇" },
-                        ]
-                    }
+                title: "繁花盛開",
+                stages: [
+                    { id: 1, title: "第一階段: 起步", tasks: [
+                        { id: "j1-1", text: "走 1000 步" },
+                        { id: "j1-2", text: "培育 2 隻皮克敏" },
+                        { id: "j1-3", text: "種 1000 朵花", amount: 1000 },
+                        { id: "j1-4", text: "摧毀 2 棵蘑菇" },
+                    ]},
+                    { id: 2, title: "第二階段: 探春", tasks: [
+                        { id: "j2-1", text: "走 2000 步" },
+                        { id: "j2-2", text: "種 1000 朵一般花", amount: 1000 },
+                        { id: "j2-3", text: "摧毀 3 棵蘑菇" },
+                        { id: "j2-4", text: "種 500 朵蝴蝶蘭", amount: 500 },
+                        { id: "j2-5", text: "摧毀 4 棵蘑菇" },
+                    ]},
+                    { id: 3, title: "第三階段: 爭豔", tasks: [
+                        { id: "j3-1", text: "種 1500 朵白色山茶花", amount: 1500 },
+                        { id: "j3-2", text: "摧毀 3 棵蘑菇" },
+                        { id: "j3-3", text: "種 1500 朵紅色山茶花", amount: 1500 },
+                        { id: "j3-4", text: "種 1500 朵黃色山茶花", amount: 1500 },
+                        { id: "j3-5", text: "種 2000 朵紅色蝴蝶蘭", amount: 2000 },
+                        { id: "j3-6", text: "摧毀 5 棵蘑菇" },
+                    ]},
+                    { id: 4, title: "第四階段: 新歲", tasks: [
+                        { id: "j4-1", text: "完成 3 個探險" },
+                        { id: "j4-2", text: "種 2000 朵白色蝴蝶蘭", amount: 2000 },
+                        { id: "j4-3", text: "種 2000 朵黃色蝴蝶蘭", amount: 2000 },
+                        { id: "j4-4", text: "種 1000 朵藍色山茶花", amount: 1000 },
+                        { id: "j4-5", text: "種 2000 朵藍色蝴蝶蘭", amount: 2000 },
+                        { id: "j4-6", text: "種 2500 朵山茶花", amount: 2500 },
+                        { id: "j4-7", text: "摧毀 5 棵蘑菇" },
+                    ]}
                 ]
             }
         };
 
-        const TRANSPORT_MODES = {
-            walk: { label: "步行", speed: 4.5, density: 12 },
-            bike: { label: "腳踏車", speed: 12, density: 18 },
-            bus: { label: "公車", speed: 20, density: 15 }
-        };
-
         const Icons = {
-            Leaf: (props) => <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className={props.className}><path strokeLinecap="round" strokeLinejoin="round" d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 .5 3.5-1.1 9.2A7 7 0 0 1 11 20Z"/><path d="m8 2 16 16"/></svg>,
-            CheckCircle2: (props) => <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className={props.className}><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>,
-            Calculator: (props) => <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className={props.className}><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="8" x2="16" y1="10" y2="10"/><line x1="8" x2="16" y1="14" y2="14"/></svg>,
-            ListTodo: (props) => <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className={props.className}><path d="M3 6h18M3 12h18M3 18h18"/></svg>,
-            Flower: (props) => <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className={props.className}><circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/></svg>,
-            ChevronDown: (props) => <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className={props.className}><path d="m6 9 6 6 6-6"/></svg>,
-            Trash2: (props) => <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className={props.className}><path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>,
-            Calendar: (props) => <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className={props.className}><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>,
-            Timer: (props) => <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className={props.className}><circle cx="12" cy="14" r="8"/><line x1="12" x2="15" y1="14" y2="11"/></svg>,
-            Settings: (props) => <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className={props.className}><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Task: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>,
+            Calc: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>,
+            Timer: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+            Check: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>,
+            Flower: () => <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
         };
 
         const App = () => {
-            const [activeTab, setActiveTab] = useState('tracker');
-            const [activeEventKey, setActiveEventKey] = useState(() => {
-                const now = new Date();
-                // 預設邏輯：如果在 2025/12 則顯示 12 月，否則顯示 1 月
-                return (now.getMonth() === 11 && now.getFullYear() === 2025) ? 'dec2025' : 'jan2026';
-            });
+            const [activeTab, setActiveTab] = useState('tasks');
+            const [activeEventKey, setActiveEventKey] = useState('jan2026');
+            const [squadSize, setSquadSize] = useState(() => Number(localStorage.getItem('pikmin_squad_v6')) || 40);
+            const [transportMode, setTransportMode] = useState('walk');
+            const [completedTasks, setCompletedTasks] = useState(() => JSON.parse(localStorage.getItem('pikmin_tasks_v6')) || {});
+            const [expanded, setExpanded] = useState({ 1: true });
+
+            useEffect(() => {
+                document.documentElement.setAttribute('data-month', activeEventKey);
+                localStorage.setItem('pikmin_squad_v6', squadSize);
+                localStorage.setItem('pikmin_tasks_v6', JSON.stringify(completedTasks));
+            }, [activeEventKey, squadSize, completedTasks]);
 
             const currentEvent = EVENTS[activeEventKey];
-            const [squadSize, setSquadSize] = useState(() => Number(localStorage.getItem('pikmin_squad')) || 40);
-            const [transport, setTransport] = useState(() => localStorage.getItem('pikmin_transport') || 'walk');
-            const [completedTasks, setCompletedTasks] = useState(() => JSON.parse(localStorage.getItem(`pikmin_tasks_${activeEventKey}`)) || {});
-            const [expandedStages, setExpandedStages] = useState({});
+            
+            const calculateReq = (amount) => {
+                const config = TRANSPORT_CONFIG[transportMode];
+                const density = Math.floor(squadSize * config.multiplier);
+                const petals = Math.ceil(amount / density);
+                const minutes = Math.ceil(petals / (2 * config.speedFactor));
+                return { petals, minutes };
+            };
 
-            useEffect(() => {
-                document.documentElement.setAttribute('data-theme', currentEvent.theme);
-            }, [currentEvent]);
+            const toggleTask = (id) => setCompletedTasks(prev => ({ ...prev, [id]: !prev[id] }));
 
-            useEffect(() => { localStorage.setItem('pikmin_squad', squadSize); }, [squadSize]);
-            useEffect(() => { localStorage.setItem('pikmin_transport', transport); }, [transport]);
-            useEffect(() => { localStorage.setItem(`pikmin_tasks_${activeEventKey}`, JSON.stringify(completedTasks)); }, [completedTasks, activeEventKey]);
-
-            const analysis = useMemo(() => {
-                let total = 0, done = 0, activeId = 1, foundActive = false;
-                currentEvent.tasks.forEach(s => {
-                    let sIncomplete = false;
-                    s.tasks.forEach(t => {
-                        total++;
-                        if (completedTasks[t.id]) done++; else sIncomplete = true;
-                    });
-                    if (sIncomplete && !foundActive) { activeId = s.id; foundActive = true; }
-                });
-                return { total, done, activeId };
-            }, [completedTasks, currentEvent]);
-
-            useEffect(() => {
-                setExpandedStages({ [analysis.activeId]: true });
-            }, [analysis.activeId, activeEventKey]);
+            const progressPercent = useMemo(() => {
+                const tasks = currentEvent.stages.flatMap(s => s.tasks);
+                const done = tasks.filter(t => completedTasks[t.id]).length;
+                return Math.round((done / tasks.length) * 100);
+            }, [completedTasks, activeEventKey]);
 
             return (
-                <div className="min-h-screen pb-32 transition-colors duration-500">
-                    {/* Hero Section */}
-                    <div className="relative min-h-[440px] w-full overflow-hidden rounded-b-[3rem] shadow-2xl bg-secondary group">
-                        <img src={currentEvent.heroImage} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[20s] group-hover:scale-105" />
-                        <div className="absolute inset-0 bg-cinematic-mask" />
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between z-20">
-                            <div className="glass-panel-dark px-4 py-2 rounded-full text-white text-xs font-bold border border-white/20">
-                                {currentEvent.name}
-                            </div>
-                            <button onClick={() => { if(confirm('確定要清除此活動進度嗎？')) setCompletedTasks({}); }} className="p-3 bg-white/10 hover:bg-white/20 rounded-full text-white/90 border border-white/20">
-                                <Icons.Trash2 className="w-5 h-5" />
-                            </button>
-                        </div>
-                        <div className="absolute bottom-10 left-0 w-full p-8 text-white">
-                            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                                <div className="animate-slide-up">
-                                    <h1 className="text-4xl md:text-5xl font-extrabold font-display leading-tight">{currentEvent.title}</h1>
+                <div className="min-h-screen">
+                    
+                    {/* --- 內容區域 --- */}
+                    {activeTab === 'tasks' ? (
+                        <div className="animate-in fade-in duration-700">
+                            {/* Hero Section with Poster */}
+                            <div className="relative h-[45vh] min-h-[380px] w-full overflow-hidden">
+                                <img 
+                                    src={currentEvent.heroImage} 
+                                    className="absolute inset-0 w-full h-full object-cover transition-all duration-1000 scale-105"
+                                    alt="Activity Background"
+                                />
+                                <div className="absolute inset-0 hero-mask" />
+                                
+                                <div className="relative z-10 h-full max-w-4xl mx-auto px-6 flex flex-col justify-end pb-16">
+                                    <div className="flex gap-2 mb-6">
+                                        {Object.keys(EVENTS).map(key => (
+                                            <button 
+                                                key={key} 
+                                                onClick={() => setActiveEventKey(key)}
+                                                className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase transition-all ${activeEventKey === key ? 'bg-primary text-white shadow-xl' : 'bg-white/30 backdrop-blur-md text-white border border-white/20'}`}
+                                            >
+                                                {EVENTS[key].name}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <h1 className="text-5xl md:text-7xl font-display font-black text-gray-800 tracking-tighter leading-tight drop-shadow-sm">
+                                        {currentEvent.title}
+                                    </h1>
+                                    <div className="mt-4 flex items-center gap-4">
+                                        <div className="flex-1 max-w-[200px] h-2.5 bg-gray-200/50 rounded-full overflow-hidden backdrop-blur-sm">
+                                            <div className="bg-primary h-full transition-all duration-1000 shadow-[0_0_10px_rgba(0,0,0,0.1)]" style={{width: `${progressPercent}%`}} />
+                                        </div>
+                                        <span className="text-xs font-black text-primary uppercase tracking-widest">{progressPercent}% 已完成</span>
+                                    </div>
                                 </div>
-                                <div className="glass-panel-dark p-5 rounded-2xl min-w-[140px]">
-                                    <div className="flex justify-between text-xs text-white/60 mb-1 font-bold"><span>PROGRESS</span><span>{Math.round((analysis.done/analysis.total)*100)}%</span></div>
-                                    <div className="text-4xl font-bold">{analysis.done}<span className="text-lg text-white/40">/{analysis.total}</span></div>
-                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    {/* Selector & Settings */}
-                    <div className="mx-5 -mt-8 relative z-30 glass-panel rounded-3xl shadow-xl p-6 space-y-4">
-                        <div className="flex flex-col gap-2">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">選擇活動內容</label>
-                            <div className="flex bg-slate-100 p-1 rounded-xl">
-                                {Object.values(EVENTS).map(ev => (
-                                    <button key={ev.id} onClick={() => setActiveEventKey(ev.id)} className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${activeEventKey === ev.id ? 'bg-white text-primary shadow-sm' : 'text-slate-400'}`}>
-                                        {ev.name}
+                            {/* Task List */}
+                            <main className="px-6 space-y-4 max-w-2xl mx-auto -mt-6 relative z-20 pb-40">
+                                {currentEvent.stages.map(stage => (
+                                    <div key={stage.id} className="bg-white rounded-[2.5rem] overflow-hidden card-shadow border border-white/50">
+                                        <div 
+                                            onClick={() => setExpanded(p => ({...p, [stage.id]: !p[stage.id]}))}
+                                            className={`p-6 flex justify-between items-center cursor-pointer transition-all ${expanded[stage.id] ? 'bg-primary-light/50' : 'hover:bg-gray-50'}`}
+                                        >
+                                            <div className="flex items-center gap-5">
+                                                <div className={`w-12 h-12 rounded-[1.2rem] flex items-center justify-center font-black text-xl transition-all ${expanded[stage.id] ? 'bg-primary text-white rotate-6' : 'bg-gray-100 text-gray-300'}`}>
+                                                    {stage.id}
+                                                </div>
+                                                <div>
+                                                    <h2 className={`font-black text-xl tracking-tight ${expanded[stage.id] ? 'text-primary' : 'text-gray-700'}`}>{stage.title}</h2>
+                                                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">{stage.tasks.length} 個目標項目</p>
+                                                </div>
+                                            </div>
+                                            <svg className={`w-6 h-6 transition-transform duration-500 ${expanded[stage.id] ? 'rotate-180 text-primary' : 'text-gray-300'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                        </div>
+                                        <div className={`accordion-content ${expanded[stage.id] ? 'open' : ''} p-5 space-y-3`}>
+                                            {stage.tasks.map(t => {
+                                                const req = t.amount ? calculateReq(t.amount) : null;
+                                                return (
+                                                    <div 
+                                                        key={t.id} onClick={() => toggleTask(t.id)}
+                                                        className={`p-5 rounded-[1.8rem] border-2 transition-all cursor-pointer ${completedTasks[t.id] ? 'bg-gray-50 border-transparent opacity-40' : 'bg-white border-gray-100 hover:border-primary/20 hover:scale-[1.01]'}`}
+                                                    >
+                                                        <div className="flex items-start gap-4">
+                                                            <div className={`mt-1 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${completedTasks[t.id] ? 'bg-green-500 border-green-500 text-white' : 'border-gray-200'}`}>
+                                                                {completedTasks[t.id] && <Icons.Check />}
+                                                            </div>
+                                                            <div className="flex-1">
+                                                                <p className={`font-bold leading-tight ${completedTasks[t.id] ? 'line-through text-gray-400' : 'text-gray-800'}`}>{t.text}</p>
+                                                                {req && !completedTasks[t.id] && (
+                                                                    <div className="mt-3 flex flex-wrap gap-2">
+                                                                        <span className="text-[10px] font-black bg-primary-light text-primary px-3 py-1 rounded-full uppercase">預估 {req.petals} 片花瓣</span>
+                                                                        <span className="text-[10px] font-black bg-gray-100 text-gray-400 px-3 py-1 rounded-full flex items-center gap-1 uppercase"><Icons.Timer />{req.minutes} 分鐘</span>
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                ))}
+                            </main>
+                        </div>
+                    ) : (
+                        /* --- 工具計算機頁面 --- */
+                        <div className="animate-in slide-in-from-bottom duration-700 px-6 pt-20 max-w-2xl mx-auto space-y-10 pb-40">
+                            <div className="text-center space-y-4">
+                                <div className="inline-block p-6 bg-primary text-white rounded-[2.5rem] shadow-xl shadow-primary/20 animate-bounce-slow">
+                                    <Icons.Flower />
+                                </div>
+                                <h2 className="text-4xl font-display font-black text-gray-800 tracking-tight">戰略消耗計算機</h2>
+                                <p className="text-gray-400 font-bold uppercase tracking-widest text-xs">模擬你的移動戰術</p>
+                            </div>
+
+                            {/* 模式切換 */}
+                            <div className="grid grid-cols-3 gap-3">
+                                {Object.values(TRANSPORT_CONFIG).map(mode => (
+                                    <button 
+                                        key={mode.id} onClick={() => setTransportMode(mode.id)}
+                                        className={`p-6 rounded-[2.2rem] flex flex-col items-center gap-3 transition-all border-2 ${transportMode === mode.id ? 'bg-primary border-primary text-white shadow-2xl scale-105' : 'bg-white border-gray-100 text-gray-400 hover:border-primary/20'}`}
+                                    >
+                                        <span className="text-3xl">{mode.icon}</span>
+                                        <span className="text-[10px] font-black uppercase tracking-widest">{mode.label}</span>
                                     </button>
                                 ))}
                             </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">隊伍規模</label>
-                                <div className="flex items-center justify-between bg-slate-50 border rounded-xl p-1">
-                                    <button onClick={() => setSquadSize(Math.max(10, squadSize-5))} className="w-8 h-8 flex items-center justify-center text-slate-400"><Icons.ChevronDown className="w-4 h-4 rotate-90"/></button>
-                                    <span className="font-bold text-primary">{squadSize}</span>
-                                    <button onClick={() => setSquadSize(Math.min(40, squadSize+5))} className="w-8 h-8 flex items-center justify-center text-slate-400"><Icons.ChevronDown className="w-4 h-4 -rotate-90"/></button>
-                                </div>
-                            </div>
-                            <div>
-                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">移動方式</label>
-                                <div className="flex bg-slate-50 border rounded-xl p-1">
-                                    {['walk', 'bike'].map(m => (
-                                        <button key={m} onClick={() => setTransport(m)} className={`flex-1 py-1 text-[10px] font-bold rounded-lg ${transport === m ? 'bg-white shadow-sm text-primary' : 'text-slate-400'}`}>
-                                            {TRANSPORT_MODES[m].label}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    {/* Tasks List */}
-                    <main className="px-5 mt-8 max-w-2xl mx-auto space-y-4">
-                        {currentEvent.tasks.map(stage => {
-                            const isDone = stage.tasks.every(t => completedTasks[t.id]);
-                            const isActive = stage.id === analysis.activeId;
-                            const expanded = expandedStages[stage.id];
-                            return (
-                                <div key={stage.id} className={`rounded-2xl overflow-hidden transition-all duration-300 ${isActive ? 'bg-white shadow-lg border-l-4 border-primary' : 'bg-white/60 opacity-80'}`}>
-                                    <div onClick={() => setExpandedStages(p => ({...p, [stage.id]: !p[stage.id]}))} className="p-5 cursor-pointer flex justify-between items-center">
-                                        <div className="flex items-center gap-4">
-                                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm ${isDone ? 'bg-success text-white' : isActive ? 'bg-primary text-white' : 'bg-slate-200 text-slate-500'}`}>
-                                                {isDone ? <Icons.CheckCircle2 className="w-5 h-5"/> : stage.id}
-                                            </div>
-                                            <span className="font-bold tracking-tight">{stage.title}</span>
-                                        </div>
-                                        <Icons.ChevronDown className={`w-5 h-5 transition-transform ${expanded ? 'rotate-180 text-primary' : 'text-slate-300'}`} />
+                            {/* 結果面板 */}
+                            <div className="bg-white rounded-[3.5rem] p-10 card-shadow space-y-12 relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-center relative z-10">
+                                    <div className="space-y-1">
+                                        <div className="text-[10px] font-black text-gray-400 uppercase tracking-[0.25em]">效率 (每片花瓣)</div>
+                                        <div className="text-6xl font-display font-black text-primary">{Math.floor(squadSize * TRANSPORT_CONFIG[transportMode].multiplier)} <span className="text-xl font-bold text-gray-300">朵</span></div>
                                     </div>
-                                    <div className={`accordion-content ${expanded ? 'open' : ''} bg-slate-50/50`}>
-                                        <div className="p-4 space-y-2">
-                                            {stage.tasks.map(t => (
-                                                <div key={t.id} onClick={() => setCompletedTasks(p => ({...p, [t.id]: !p[t.id]}))} className={`p-4 rounded-xl border flex items-center gap-4 transition-all cursor-pointer ${completedTasks[t.id] ? 'bg-slate-100 opacity-60' : 'bg-white shadow-sm hover:border-primary/50'}`}>
-                                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${completedTasks[t.id] ? 'bg-success border-success' : 'border-slate-200'}`}>
-                                                        {completedTasks[t.id] && <Icons.CheckCircle2 className="w-3 h-3 text-white" />}
-                                                    </div>
-                                                    <div className="flex-1">
-                                                        <span className={`text-sm font-medium ${completedTasks[t.id] ? 'line-through text-slate-400' : 'text-slate-700'}`}>{t.text}</span>
-                                                        {t.type === 'plant' && !completedTasks[t.id] && (
-                                                            <div className="flex gap-2 mt-1">
-                                                                <span className="text-[10px] font-bold text-primary bg-primary/5 px-1.5 py-0.5 rounded">
-                                                                    需 {Math.ceil(t.amount / TRANSPORT_MODES[transport].density)} 花瓣
-                                                                </span>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
+                                    <div className="space-y-1">
+                                        <div className="text-[10px] font-black text-gray-400 uppercase tracking-[0.25em]">預計耗時 (1500朵)</div>
+                                        <div className="text-6xl font-display font-black text-primary">{calculateReq(1500).minutes} <span className="text-xl font-bold text-gray-300">分</span></div>
                                     </div>
                                 </div>
-                            );
-                        })}
-                    </main>
-
-                    {/* Bottom Nav */}
-                    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[90%] max-w-sm glass-panel shadow-2xl rounded-full p-1.5 flex z-50">
-                        <button onClick={() => setActiveTab('tracker')} className={`flex-1 flex flex-col items-center py-2 rounded-full transition-all ${activeTab === 'tracker' ? 'bg-primary text-white shadow-lg' : 'text-slate-400'}`}>
-                            <Icons.ListTodo className="w-5 h-5 mb-1" />
-                            <span className="text-[10px] font-bold">任務進度</span>
-                        </button>
-                        <button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="px-4 text-slate-300">
-                             <Icons.Flower className="w-6 h-6 animate-float" />
-                        </button>
-                        <button onClick={() => setActiveTab('calc')} className={`flex-1 flex flex-col items-center py-2 rounded-full transition-all ${activeTab === 'calc' ? 'bg-primary text-white shadow-lg' : 'text-slate-400'}`}>
-                            <Icons.Calculator className="w-5 h-5 mb-1" />
-                            <span className="text-[10px] font-bold">花量計算</span>
-                        </button>
-                    </div>
-
-                    {/* Simple Calc Overlay */}
-                    {activeTab === 'calc' && (
-                        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-end animate-fade-in" onClick={() => setActiveTab('tracker')}>
-                            <div className="w-full glass-panel rounded-t-[3rem] p-8 space-y-6 animate-slide-up" onClick={e => e.stopPropagation()}>
-                                <div className="flex items-center gap-3">
-                                    <Icons.Calculator className="w-6 h-6 text-primary" />
-                                    <h2 className="text-xl font-bold">簡易花量計算</h2>
+                                
+                                <div className="p-6 bg-gray-50 rounded-[2rem] border-2 border-dashed border-gray-200">
+                                    <h4 className="text-gray-800 font-black text-xs uppercase tracking-widest mb-3 flex items-center gap-2">
+                                        <span className="w-1.5 h-1.5 bg-primary rounded-full" /> 戰術模擬說明
+                                    </h4>
+                                    <p className="text-[11px] text-gray-400 leading-relaxed font-bold italic">
+                                        當前設定：使用「{TRANSPORT_CONFIG[transportMode].label}」模式配合「{squadSize} 人」規模。系統偵測到此配置適合解開中大型任務，請確保移動路線不重複以最大化種植效率。
+                                    </p>
                                 </div>
-                                <div className="space-y-4">
-                                    <p className="text-sm text-slate-500 font-medium">目前設定：{squadSize} 隻皮克敏 / {TRANSPORT_MODES[transport].label}</p>
-                                    <div className="p-5 bg-slate-50 rounded-2xl border flex justify-between items-center">
-                                        <div>
-                                            <p className="text-xs font-bold text-slate-400 uppercase mb-1 tracking-wider">每片花瓣可種</p>
-                                            <p className="text-3xl font-black text-primary font-display">{TRANSPORT_MODES[transport].density} <span className="text-sm font-bold text-primary/60">朵花</span></p>
-                                        </div>
-                                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                                            <Icons.Flower className="w-6 h-6 text-primary" />
-                                        </div>
-                                    </div>
-                                    <div className="p-4 bg-orange-50/50 rounded-xl border border-orange-100">
-                                        <p className="text-xs text-orange-700 leading-relaxed font-medium italic">
-                                            提示：消耗速率約為每分鐘 {Math.ceil(TRANSPORT_MODES[transport].density / 2)} 朵左右，視乎隊伍規模變動。
-                                        </p>
-                                    </div>
-                                </div>
-                                <button onClick={() => setActiveTab('tracker')} className="w-full py-4 bg-primary text-white font-bold rounded-2xl shadow-lg active:scale-[0.98] transition-all">關閉計算機</button>
                             </div>
                         </div>
                     )}
+
+                    {/* --- 全時段控制導覽底欄 --- */}
+                    <nav className="fixed bottom-10 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50">
+                        <div className="glass-nav rounded-full p-2.5 flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.1)] border-white/50">
+                            
+                            {/* 任務 */}
+                            <button 
+                                onClick={() => setActiveTab('tasks')}
+                                className={`flex-1 flex flex-col items-center py-2.5 rounded-full transition-all ${activeTab === 'tasks' ? 'bg-primary text-white shadow-xl' : 'text-gray-300'}`}
+                            >
+                                <Icons.Task />
+                                <span className="text-[9px] font-bold mt-1 uppercase tracking-tighter">活動任務</span>
+                            </button>
+
+                            {/* 人數控制器 */}
+                            <div className="flex-[1.8] px-4">
+                                <div className="bg-gray-100/60 rounded-full p-1 flex items-center justify-between border border-gray-200/50">
+                                    <button onClick={() => setSquadSize(s => Math.max(10, s-5))} className="w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center font-black text-primary active:scale-90 transition-all">-</button>
+                                    <div className="flex flex-col items-center">
+                                        <span className="text-base font-display font-black text-gray-800 leading-none">{squadSize}</span>
+                                        <span className="text-[8px] font-black text-gray-400 uppercase tracking-[0.15em]">隊伍規模</span>
+                                    </div>
+                                    <button onClick={() => setSquadSize(s => Math.min(40, s+5))} className="w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center font-black text-primary active:scale-90 transition-all">+</button>
+                                </div>
+                            </div>
+
+                            {/* 計算機 */}
+                            <button 
+                                onClick={() => setActiveTab('calc')}
+                                className={`flex-1 flex flex-col items-center py-2.5 rounded-full transition-all ${activeTab === 'calc' ? 'bg-primary text-white shadow-xl' : 'text-gray-300'}`}
+                            >
+                                <Icons.Calc />
+                                <span className="text-[9px] font-bold mt-1 uppercase tracking-tighter">計算工具</span>
+                            </button>
+
+                        </div>
+                    </nav>
+
                 </div>
             );
         };
