@@ -123,7 +123,8 @@
                 endDate: new Date(2025, 11, 31, 23, 59, 59),
                 tasks: [
                     {
-                        id: 1, title: "Stage 1", tasks: [
+                        id: 1, title: "Stage 1：暖身起步",
+                        tasks: [
                             { id: "d1-1", type: "step", text: "走 1000 步" },
                             { id: "d1-2", type: "grow", text: "培育 2 隻皮克敏" },
                             { id: "d1-3", type: "expedition", text: "完成 2 個探險" },
@@ -131,9 +132,9 @@
                             { id: "d1-4b", type: "mushroom", text: "摧毀 2 棵蘑菇" },
                         ]
                     },
-                    // ... (其他 12 月任務略，保持原樣)
                     {
-                        id: 2, title: "Stage 2", tasks: [
+                        id: 2, title: "Stage 2：探索升溫",
+                        tasks: [
                             { id: "d2-1", type: "step", text: "走 2000 步" },
                             { id: "d2-2a", type: "plant", flowerType: "一般花朵", amount: 1000, text: "種 1000 朵花" },
                             { id: "d2-2b", type: "mushroom", text: "摧毀 2 棵蘑菇" },
@@ -141,6 +142,35 @@
                             { id: "d2-3b", type: "mushroom", text: "摧毀 3 棵蘑菇" },
                             { id: "d2-4a", type: "plant", flowerType: "櫻草花", amount: 500, text: "種 500 朵櫻草花" },
                             { id: "d2-4b", type: "mushroom", text: "摧毀 4 棵蘑菇" },
+                        ]
+                    },
+                    {
+                        id: 3, title: "Stage 3：色彩綻放",
+                        tasks: [
+                            { id: "d3-1a", type: "step", text: "走 2000 步" },
+                            { id: "d3-1b", type: "expedition", text: "完成 2 個探險" },
+                            { id: "d3-2a", type: "plant", flowerType: "白色聖誕紅", amount: 1500, text: "種 1500 朵白色聖誕紅" },
+                            { id: "d3-2b", type: "mushroom", text: "摧毀 3 棵蘑菇" },
+                            { id: "d3-3a", type: "plant", flowerType: "紅色聖誕紅", amount: 1500, text: "種 1500 朵紅色聖誕紅" },
+                            { id: "d3-3b", type: "mushroom", text: "摧毀 4 棵蘑菇" },
+                            { id: "d3-4a", type: "plant", flowerType: "黃色聖誕紅", amount: 1500, text: "種 1500 朵黃色聖誕紅" },
+                            { id: "d3-4b", type: "plant", flowerType: "紅色櫻草花", amount: 2000, text: "種 2000 朵紅色櫻草花" },
+                            { id: "d3-4c", type: "mushroom", text: "摧毀 5 棵蘑菇" },
+                        ]
+                    },
+                    {
+                        id: 4, title: "Stage 4：終極挑戰",
+                        tasks: [
+                            { id: "d4-1a", type: "expedition", text: "完成 3 個探險" },
+                            { id: "d4-1b", type: "mushroom", text: "摧毀 3 棵蘑菇" },
+                            { id: "d4-2a", type: "plant", flowerType: "白色櫻草花", amount: 2000, text: "種 2000 朵白色櫻草花" },
+                            { id: "d4-2b", type: "mushroom", text: "摧毀 4 棵蘑菇" },
+                            { id: "d4-3a", type: "plant", flowerType: "黃色櫻草花", amount: 2000, text: "種 2000 朵黃色櫻草花" },
+                            { id: "d4-3b", type: "plant", flowerType: "藍色聖誕紅", amount: 1000, text: "種 1000 朵藍色聖誕紅" },
+                            { id: "d4-3c", type: "mushroom", text: "摧毀 4 棵蘑菇" },
+                            { id: "d4-4a", type: "plant", flowerType: "藍色櫻草花", amount: 2000, text: "種 2000 朵藍色櫻草花" },
+                            { id: "d4-4b", type: "plant", flowerType: "聖誕紅", amount: 2500, text: "種 2500 朵聖誕紅 (任意)" },
+                            { id: "d4-4c", type: "mushroom", text: "摧毀 5 棵蘑菇" },
                         ]
                     }
                 ]
@@ -231,6 +261,7 @@
             const [activeTab, setActiveTab] = useState('tracker');
             const [activeEventKey, setActiveEventKey] = useState(() => {
                 const now = new Date();
+                // 預設邏輯：如果在 2025/12 則顯示 12 月，否則顯示 1 月
                 return (now.getMonth() === 11 && now.getFullYear() === 2025) ? 'dec2025' : 'jan2026';
             });
 
@@ -266,7 +297,7 @@
             }, [analysis.activeId, activeEventKey]);
 
             return (
-                <div className="min-h-screen pb-32">
+                <div className="min-h-screen pb-32 transition-colors duration-500">
                     {/* Hero Section */}
                     <div className="relative min-h-[440px] w-full overflow-hidden rounded-b-[3rem] shadow-2xl bg-secondary group">
                         <img src={currentEvent.heroImage} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[20s] group-hover:scale-105" />
@@ -275,7 +306,7 @@
                             <div className="glass-panel-dark px-4 py-2 rounded-full text-white text-xs font-bold border border-white/20">
                                 {currentEvent.name}
                             </div>
-                            <button onClick={() => setCompletedTasks({})} className="p-3 bg-white/10 hover:bg-white/20 rounded-full text-white/90 border border-white/20">
+                            <button onClick={() => { if(confirm('確定要清除此活動進度嗎？')) setCompletedTasks({}); }} className="p-3 bg-white/10 hover:bg-white/20 rounded-full text-white/90 border border-white/20">
                                 <Icons.Trash2 className="w-5 h-5" />
                             </button>
                         </div>
@@ -308,9 +339,9 @@
                             <div>
                                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">隊伍規模</label>
                                 <div className="flex items-center justify-between bg-slate-50 border rounded-xl p-1">
-                                    <button onClick={() => setSquadSize(s.max(10, squadSize-5))} className="w-8 h-8 flex items-center justify-center text-slate-400"><Icons.ChevronDown className="w-4 h-4 rotate-90"/></button>
+                                    <button onClick={() => setSquadSize(Math.max(10, squadSize-5))} className="w-8 h-8 flex items-center justify-center text-slate-400"><Icons.ChevronDown className="w-4 h-4 rotate-90"/></button>
                                     <span className="font-bold text-primary">{squadSize}</span>
-                                    <button onClick={() => setSquadSize(s.min(40, squadSize+5))} className="w-8 h-8 flex items-center justify-center text-slate-400"><Icons.ChevronDown className="w-4 h-4 -rotate-90"/></button>
+                                    <button onClick={() => setSquadSize(Math.min(40, squadSize+5))} className="w-8 h-8 flex items-center justify-center text-slate-400"><Icons.ChevronDown className="w-4 h-4 -rotate-90"/></button>
                                 </div>
                             </div>
                             <div>
@@ -339,7 +370,7 @@
                                             <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm ${isDone ? 'bg-success text-white' : isActive ? 'bg-primary text-white' : 'bg-slate-200 text-slate-500'}`}>
                                                 {isDone ? <Icons.CheckCircle2 className="w-5 h-5"/> : stage.id}
                                             </div>
-                                            <span className="font-bold">{stage.title}</span>
+                                            <span className="font-bold tracking-tight">{stage.title}</span>
                                         </div>
                                         <Icons.ChevronDown className={`w-5 h-5 transition-transform ${expanded ? 'rotate-180 text-primary' : 'text-slate-300'}`} />
                                     </div>
@@ -347,10 +378,19 @@
                                         <div className="p-4 space-y-2">
                                             {stage.tasks.map(t => (
                                                 <div key={t.id} onClick={() => setCompletedTasks(p => ({...p, [t.id]: !p[t.id]}))} className={`p-4 rounded-xl border flex items-center gap-4 transition-all cursor-pointer ${completedTasks[t.id] ? 'bg-slate-100 opacity-60' : 'bg-white shadow-sm hover:border-primary/50'}`}>
-                                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${completedTasks[t.id] ? 'bg-success border-success' : 'border-slate-200'}`}>
+                                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${completedTasks[t.id] ? 'bg-success border-success' : 'border-slate-200'}`}>
                                                         {completedTasks[t.id] && <Icons.CheckCircle2 className="w-3 h-3 text-white" />}
                                                     </div>
-                                                    <span className={`text-sm font-medium ${completedTasks[t.id] ? 'line-through' : ''}`}>{t.text}</span>
+                                                    <div className="flex-1">
+                                                        <span className={`text-sm font-medium ${completedTasks[t.id] ? 'line-through text-slate-400' : 'text-slate-700'}`}>{t.text}</span>
+                                                        {t.type === 'plant' && !completedTasks[t.id] && (
+                                                            <div className="flex gap-2 mt-1">
+                                                                <span className="text-[10px] font-bold text-primary bg-primary/5 px-1.5 py-0.5 rounded">
+                                                                    需 {Math.ceil(t.amount / TRANSPORT_MODES[transport].density)} 花瓣
+                                                                </span>
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
@@ -384,14 +424,23 @@
                                     <h2 className="text-xl font-bold">簡易花量計算</h2>
                                 </div>
                                 <div className="space-y-4">
-                                    <p className="text-sm text-slate-500">目前設定：{squadSize} 隻皮克敏 / {TRANSPORT_MODES[transport].label}</p>
-                                    <div className="p-4 bg-slate-50 rounded-2xl border">
-                                        <p className="text-xs font-bold text-slate-400 uppercase mb-2">每片花瓣可種</p>
-                                        <p className="text-2xl font-bold text-primary">{TRANSPORT_MODES[transport].density} 朵花</p>
+                                    <p className="text-sm text-slate-500 font-medium">目前設定：{squadSize} 隻皮克敏 / {TRANSPORT_MODES[transport].label}</p>
+                                    <div className="p-5 bg-slate-50 rounded-2xl border flex justify-between items-center">
+                                        <div>
+                                            <p className="text-xs font-bold text-slate-400 uppercase mb-1 tracking-wider">每片花瓣可種</p>
+                                            <p className="text-3xl font-black text-primary font-display">{TRANSPORT_MODES[transport].density} <span className="text-sm font-bold text-primary/60">朵花</span></p>
+                                        </div>
+                                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                            <Icons.Flower className="w-6 h-6 text-primary" />
+                                        </div>
                                     </div>
-                                    <p className="text-[10px] text-slate-400">※ 此數值僅供參考，實際數量受網速與移動路徑影響。</p>
+                                    <div className="p-4 bg-orange-50/50 rounded-xl border border-orange-100">
+                                        <p className="text-xs text-orange-700 leading-relaxed font-medium italic">
+                                            提示：消耗速率約為每分鐘 {Math.ceil(TRANSPORT_MODES[transport].density / 2)} 朵左右，視乎隊伍規模變動。
+                                        </p>
+                                    </div>
                                 </div>
-                                <button onClick={() => setActiveTab('tracker')} className="w-full py-4 bg-primary text-white font-bold rounded-2xl shadow-lg">關閉計算機</button>
+                                <button onClick={() => setActiveTab('tracker')} className="w-full py-4 bg-primary text-white font-bold rounded-2xl shadow-lg active:scale-[0.98] transition-all">關閉計算機</button>
                             </div>
                         </div>
                     )}
