@@ -12,7 +12,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -34,7 +34,7 @@
     </script>
 
     <style>
-        /* 月份色彩定義 */
+        /* 月份色彩定義 - 保持原本的活潑調性 */
         [data-month='dec2025'] {
             --color-primary: #e11d48;
             --color-primary-light: #fff1f2;
@@ -54,11 +54,12 @@
             font-family: 'Noto Sans TC', sans-serif;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .hero-mask { background: var(--mask-gradient); }
         .card-shadow { box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 8px 12px -6px rgba(0, 0, 0, 0.02); }
-        .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.5); }
+        .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.5); }
         
         .accordion-content {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -71,6 +72,8 @@
             50% { transform: translateY(-8px); }
         }
         .animate-bounce-slow { animation: bounce-slow 4s infinite ease-in-out; }
+
+        .btn-active-scale:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -170,21 +173,24 @@
             Calc: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>,
             Timer: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
             Check: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>,
-            Flower: () => <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
+            Flower: () => <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>,
+            Reset: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>,
+            Chevron: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
         };
 
         const App = () => {
             const [activeTab, setActiveTab] = useState('tasks');
             const [activeEventKey, setActiveEventKey] = useState('jan2026');
-            const [squadSize, setSquadSize] = useState(() => Number(localStorage.getItem('pikmin_squad_v6')) || 40);
+            const [squadSize, setSquadSize] = useState(() => Number(localStorage.getItem('pikmin_squad_v7')) || 40);
             const [transportMode, setTransportMode] = useState('walk');
-            const [completedTasks, setCompletedTasks] = useState(() => JSON.parse(localStorage.getItem('pikmin_tasks_v6')) || {});
+            const [completedTasks, setCompletedTasks] = useState(() => JSON.parse(localStorage.getItem('pikmin_tasks_v7')) || {});
             const [expanded, setExpanded] = useState({ 1: true });
+            const [showResetConfirm, setShowResetConfirm] = useState(false);
 
             useEffect(() => {
                 document.documentElement.setAttribute('data-month', activeEventKey);
-                localStorage.setItem('pikmin_squad_v6', squadSize);
-                localStorage.setItem('pikmin_tasks_v6', JSON.stringify(completedTasks));
+                localStorage.setItem('pikmin_squad_v7', squadSize);
+                localStorage.setItem('pikmin_tasks_v7', JSON.stringify(completedTasks));
             }, [activeEventKey, squadSize, completedTasks]);
 
             const currentEvent = EVENTS[activeEventKey];
@@ -199,6 +205,13 @@
 
             const toggleTask = (id) => setCompletedTasks(prev => ({ ...prev, [id]: !prev[id] }));
 
+            // 全清空功能
+            const clearAllTasks = () => {
+                setCompletedTasks({});
+                setShowResetConfirm(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
             const progressPercent = useMemo(() => {
                 const tasks = currentEvent.stages.flatMap(s => s.tasks);
                 const done = tasks.filter(t => completedTasks[t.id]).length;
@@ -208,6 +221,25 @@
             return (
                 <div className="min-h-screen">
                     
+                    {/* --- 全清空確認 Modal --- */}
+                    {showResetConfirm && (
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+                            <div className="bg-white rounded-[2.5rem] p-8 max-w-sm w-full shadow-2xl text-center">
+                                <div className="w-20 h-20 bg-primary-light rounded-full flex items-center justify-center mb-6 mx-auto">
+                                    <div className="text-primary scale-125"><Icons.Reset /></div>
+                                </div>
+                                <h3 className="text-2xl font-black text-gray-800 mb-3 tracking-tight">重置所有進度？</h3>
+                                <p className="text-gray-400 text-sm mb-8 font-bold leading-relaxed">
+                                    此動作將清除當前所有已完成的項目，<br/>讓你重新開始新一輪的挑戰。
+                                </p>
+                                <div className="flex gap-3">
+                                    <button onClick={() => setShowResetConfirm(false)} className="flex-1 py-4 rounded-2xl bg-gray-100 text-gray-400 font-black btn-active-scale transition-all">取消</button>
+                                    <button onClick={clearAllTasks} className="flex-1 py-4 rounded-2xl bg-primary text-white font-black shadow-lg shadow-primary/20 btn-active-scale transition-all">確認清空</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {/* --- 內容區域 --- */}
                     {activeTab === 'tasks' ? (
                         <div className="animate-in fade-in duration-700">
@@ -221,25 +253,35 @@
                                 <div className="absolute inset-0 hero-mask" />
                                 
                                 <div className="relative z-10 h-full max-w-4xl mx-auto px-6 flex flex-col justify-end pb-16">
-                                    <div className="flex gap-2 mb-6">
-                                        {Object.keys(EVENTS).map(key => (
-                                            <button 
-                                                key={key} 
-                                                onClick={() => setActiveEventKey(key)}
-                                                className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase transition-all ${activeEventKey === key ? 'bg-primary text-white shadow-xl' : 'bg-white/30 backdrop-blur-md text-white border border-white/20'}`}
-                                            >
-                                                {EVENTS[key].name}
-                                            </button>
-                                        ))}
+                                    <div className="flex justify-between items-end mb-6">
+                                        <div className="flex gap-2">
+                                            {Object.keys(EVENTS).map(key => (
+                                                <button 
+                                                    key={key} 
+                                                    onClick={() => setActiveEventKey(key)}
+                                                    className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase transition-all ${activeEventKey === key ? 'bg-primary text-white shadow-xl' : 'bg-white/40 backdrop-blur-md text-white border border-white/20'}`}
+                                                >
+                                                    {EVENTS[key].name}
+                                                </button>
+                                            ))}
+                                        </div>
+                                        {/* 全清空按鈕 */}
+                                        <button 
+                                            onClick={() => setShowResetConfirm(true)}
+                                            className="w-10 h-10 bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/20 shadow-lg btn-active-scale transition-all"
+                                            title="重置進度"
+                                        >
+                                            <Icons.Reset />
+                                        </button>
                                     </div>
                                     <h1 className="text-5xl md:text-7xl font-display font-black text-gray-800 tracking-tighter leading-tight drop-shadow-sm">
                                         {currentEvent.title}
                                     </h1>
                                     <div className="mt-4 flex items-center gap-4">
-                                        <div className="flex-1 max-w-[200px] h-2.5 bg-gray-200/50 rounded-full overflow-hidden backdrop-blur-sm">
+                                        <div className="flex-1 max-w-[200px] h-2.5 bg-white/50 rounded-full overflow-hidden backdrop-blur-sm border border-white/30">
                                             <div className="bg-primary h-full transition-all duration-1000 shadow-[0_0_10px_rgba(0,0,0,0.1)]" style={{width: `${progressPercent}%`}} />
                                         </div>
-                                        <span className="text-xs font-black text-primary uppercase tracking-widest">{progressPercent}% 已完成</span>
+                                        <span className="text-xs font-black text-primary uppercase tracking-widest">{progressPercent}% 已達成</span>
                                     </div>
                                 </div>
                             </div>
@@ -247,7 +289,7 @@
                             {/* Task List */}
                             <main className="px-6 space-y-4 max-w-2xl mx-auto -mt-6 relative z-20 pb-40">
                                 {currentEvent.stages.map(stage => (
-                                    <div key={stage.id} className="bg-white rounded-[2.5rem] overflow-hidden card-shadow border border-white/50">
+                                    <div key={stage.id} className="bg-white rounded-[2.5rem] overflow-hidden card-shadow border border-white/80">
                                         <div 
                                             onClick={() => setExpanded(p => ({...p, [stage.id]: !p[stage.id]}))}
                                             className={`p-6 flex justify-between items-center cursor-pointer transition-all ${expanded[stage.id] ? 'bg-primary-light/50' : 'hover:bg-gray-50'}`}
@@ -261,23 +303,24 @@
                                                     <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">{stage.tasks.length} 個目標項目</p>
                                                 </div>
                                             </div>
-                                            <svg className={`w-6 h-6 transition-transform duration-500 ${expanded[stage.id] ? 'rotate-180 text-primary' : 'text-gray-300'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                            <div className={`transition-transform duration-500 ${expanded[stage.id] ? 'rotate-180 text-primary' : 'text-gray-300'}`}><Icons.Chevron /></div>
                                         </div>
                                         <div className={`accordion-content ${expanded[stage.id] ? 'open' : ''} p-5 space-y-3`}>
                                             {stage.tasks.map(t => {
                                                 const req = t.amount ? calculateReq(t.amount) : null;
+                                                const isDone = completedTasks[t.id];
                                                 return (
                                                     <div 
                                                         key={t.id} onClick={() => toggleTask(t.id)}
-                                                        className={`p-5 rounded-[1.8rem] border-2 transition-all cursor-pointer ${completedTasks[t.id] ? 'bg-gray-50 border-transparent opacity-40' : 'bg-white border-gray-100 hover:border-primary/20 hover:scale-[1.01]'}`}
+                                                        className={`p-5 rounded-[1.8rem] border-2 transition-all cursor-pointer ${isDone ? 'bg-gray-50 border-transparent opacity-40 scale-[0.98]' : 'bg-white border-gray-100 hover:border-primary/20 hover:scale-[1.01]'}`}
                                                     >
                                                         <div className="flex items-start gap-4">
-                                                            <div className={`mt-1 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${completedTasks[t.id] ? 'bg-green-500 border-green-500 text-white' : 'border-gray-200'}`}>
-                                                                {completedTasks[t.id] && <Icons.Check />}
+                                                            <div className={`mt-1 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${isDone ? 'bg-green-500 border-green-500 text-white' : 'border-gray-200'}`}>
+                                                                {isDone && <Icons.Check />}
                                                             </div>
                                                             <div className="flex-1">
-                                                                <p className={`font-bold leading-tight ${completedTasks[t.id] ? 'line-through text-gray-400' : 'text-gray-800'}`}>{t.text}</p>
-                                                                {req && !completedTasks[t.id] && (
+                                                                <p className={`font-bold leading-tight ${isDone ? 'line-through text-gray-400' : 'text-gray-800'}`}>{t.text}</p>
+                                                                {req && !isDone && (
                                                                     <div className="mt-3 flex flex-wrap gap-2">
                                                                         <span className="text-[10px] font-black bg-primary-light text-primary px-3 py-1 rounded-full uppercase">預估 {req.petals} 片花瓣</span>
                                                                         <span className="text-[10px] font-black bg-gray-100 text-gray-400 px-3 py-1 rounded-full flex items-center gap-1 uppercase"><Icons.Timer />{req.minutes} 分鐘</span>
